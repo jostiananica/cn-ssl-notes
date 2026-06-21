@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>爱游戏体育 · 信息卡片页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0f6f9;
+            color: #1a2b3c;
+            line-height: 1.6;
+            padding: 2rem 1.25rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 1120px;
+            width: 100%;
+        }
+
+        /* 主视觉区 — 收藏/再次访问主题 */
+        .hero {
+            background: linear-gradient(145deg, #e2f0f5 0%, #d1e7ed 100%);
+            border-radius: 2rem;
+            padding: 2.5rem 2rem 2.8rem;
+            margin-bottom: 2.2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px -8px rgba(0, 80, 100, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(50, 180, 180, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #0f3b4a;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: #2b5a6a;
+            margin-bottom: 1.2rem;
+            font-weight: 450;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            font-size: 1rem;
+            color: #1e4c5c;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bookmark-note {
+            display: inline-block;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            padding: 0.50rem 1.5rem;
+            border-radius: 40px;
+            margin-top: 1.2rem;
+            font-size: 0.95rem;
+            color: #146b7a;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border: 1px solid #b3d8e2;
+        }
+
+        /* 网格卡片 — 蓝绿色调 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 580px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 920px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.8rem 1.5rem 1.8rem 1.8rem;
+            box-shadow: 0 8px 18px -6px rgba(0, 70, 80, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.25s;
+            border: 1px solid #ddeef2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px -10px rgba(0, 90, 100, 0.12);
+            border-color: #a2cdd9;
+        }
+
+        .card-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.6rem;
+            height: 2.6rem;
+            background: #d6edf2;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: #0f5f6f;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f3b4a;
+            margin-bottom: 0.4rem;
+        }
+
+        .card p, .card ul {
+            font-size: 0.95rem;
+            color: #2b4e5a;
+            margin-bottom: 0.3rem;
+            flex: 1;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            list-style-type: '— ';
+            margin-top: 0.3rem;
+        }
+
+        .card ul li {
+            margin-bottom: 0.25rem;
+        }
+
+        .card .more-hint {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: #3f7b89;
+            border-top: 1px dashed #c8dee6;
+            padding-top: 0.6rem;
+        }
+
+        /* 自然链接段落 — 从再次关注角度 */
+        .link-section {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid #b9d8e3;
+            box-shadow: 0 4px 12px rgba(0,50,60,0.03);
+        }
+
+        .link-section h2 {
+            font-size: 1.5rem;
+            font-weight: 550;
+            color: #0f3b4a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-section p {
+            color: #193f4d;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .link-section a {
+            color: #0b6b7e;
+            text-decoration: none;
+            font-weight: 530;
+            border-bottom: 2px solid #9acbd9;
+            transition: border-color 0.2s, background 0.2s;
+            padding: 0 0.1rem;
+        }
+
+        .link-section a:hover {
+            border-bottom-color: #0f5f6f;
+            background: #e1f2f7;
+            border-radius: 4px;
+        }
+
+        .faq-mini {
+            background: #e7f2f6;
+            border-radius: 1.5rem;
+            padding: 1.6rem 1.6rem 1.2rem 1.6rem;
+            margin-top: 1.5rem;
+        }
+
+        .faq-mini h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0a414f;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 0.9rem;
+            align-items: flex-start;
+        }
+
+        .faq-item .q {
+            font-weight: 600;
+            color: #0f4b59;
+            min-width: 2rem;
+        }
+
+        .faq-item .a {
+            color: #1c4d5b;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #507d89;
+            font-size: 0.9rem;
+            border-top: 1px solid #c7dce4;
+            padding-top: 1.8rem;
+            margin-top: 1.2rem;
+        }
+
+        .footer-note span {
+            background: #d6eaef;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 480px) {
+            body { padding: 1rem 0.9rem; }
+            .hero { padding: 2rem 1.2rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .link-section { padding: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <!-- hero: 再次访问 / 收藏视角 -->
+    <div class="hero">
+        <h1>再次走进 · 爱游戏体育</h1>
+        <div class="tagline">持续关注，发现更多运动乐趣</div>
+        <p>
+            如果你曾经浏览过这里，或者刚刚开始留意体育资讯，不妨把页面收藏起来。
+            每次回来，都会看到更新后的内容与整理好的信息卡片。
+        </p>
+        <div class="bookmark-note">⭐ 推荐收藏 · 保持关注</div>
+    </div>
+
+    <!-- 用途卡片网格 三张：用途、适合人群、持续关注 -->
+    <div class="card-grid">
+        <!-- 卡片1：用途视角 -->
+        <div class="card">
+            <div class="card-icon">🏅</div>
+            <h3>用途与场景</h3>
+            <p>
+                了解体育动态、赛程资讯以及运动知识——无论是赛前预览还是赛后回顾，
+                这里都提供有条理的汇总。
+            </p>
+            <div class="more-hint">
+                <span>✔ 日常浏览 · 赛事备忘</span>
+            </div>
+        </div>
+
+        <!-- 卡片2：适合人群 -->
+        <div class="card">
+            <div class="card-icon">👥</div>
+            <h3>适合人群</h3>
+            <ul>
+                <li>习惯抽空关注体育的上班族</li>
+                <li>喜欢整理信息、收藏页面的爱好者</li>
+                <li>想简单了解项目规则的新手</li>
+            </ul>
+            <div class="more-hint">
+                <span>✔ 不同阶段都能找到对应内容</span>
+            </div>
+        </div>
+
+        <!-- 卡片3：持续关注的价值 -->
+        <div class="card">
+            <div class="card-icon">🔁</div>
+            <h3>持续关注的理由</h3>
+            <p>
+                页面内容会定期梳理，从卡片式摘要到常见问题都有更新。
+                如果你希望保持对体育信息的感知，不妨每隔一段时间回来看一看。
+            </p>
+            <div class="more-hint">
+                <span>✔ 减少信息过载 · 专注核心</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自然链接段落：嵌入“爱游戏体育” 句子语气 = 再次访问/收藏 -->
+    <div class="link-section">
+        <h2>📌 从收藏夹里重新打开</h2>
+        <p>
+            如果你曾经把 <a href="https://cn-ssl-ayxsport.com">爱游戏体育</a> 加入书签，
+            现在正好可以回来看看整理后的信息卡片。页面围绕“再次访问”这个动作做了调整，
+            让你快速回忆起之前关注的要点。
+        </p>
+        <p>
+            有些用户习惯把常用站点固定到标签栏，或者放在浏览器的书签文件夹里。
+            对于持续关注体育动态的人，<a href="https://cn-ssl-ayxsport.com">爱游戏体育</a> 是一个值得保留的条目。
+            每次打开，都能看到结构清晰的内容模块。
+        </p>
+        <p>
+            另外，如果你最近刚开始关注体育资讯，也可以把这个页面当作一个安静的起点——
+            不必频繁刷新，只需在需要时回来翻看。
+        </p>
+
+        <!-- FAQ 摘要 — 围绕收藏/持续关注 -->
+        <div class="faq-mini">
+            <h3>❓ 常见想法（FAQ 摘要）</h3>
+            <div class="faq-item">
+                <span class="q">Q:</span>
+                <span class="a">忘记页面地址了怎么办？</span>
+            </div>
+            <div class="faq-item" style="margin-top: 0;">
+                <span class="q">A:</span>
+                <span class="a">建议现在就把站点添加到书签，或者记在备忘录里。</span>
+            </div>
+            <div class="faq-item">
+                <span class="q">Q:</span>
+                <span class="a">内容会一直不变吗？</span>
+            </div>
+            <div class="faq-item" style="margin-top: 0;">
+                <span class="q">A:</span>
+                <span class="a">页面会不定期整理卡片与信息，保持新鲜感，但始终围绕清晰、克制的风格。</span>
+            </div>
+            <div class="faq-item">
+                <span class="q">Q:</span>
+                <span class="a">适合推荐给朋友吗？</span>
+            </div>
+            <div class="faq-item" style="margin-top: 0;">
+                <span class="q">A:</span>
+                <span class="a">如果对方也希望有一个信息卡片式的体育介绍页，可以分享 <a href="https://cn-ssl-ayxsport.com" style="border-bottom: 1px solid #7ab7c7; background: transparent; padding:0;">爱游戏体育</a> 给他。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部附注 强调收藏 / 再次访问 -->
+    <div class="footer-note">
+        <span>🔄 重复访问 · 保持感知</span> &nbsp;|&nbsp; 页面内容定期梳理 &nbsp;|&nbsp; 信息卡片风格
+    </div>
+</div>
+</body>
+</html>
