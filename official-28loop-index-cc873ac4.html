@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>28圈 · 资料索引与信息归档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f0f2f5;
+            color: #1e1f22;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* hero 横幅 */
+        .hero {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 3rem 2.5rem 2.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e5e8ed;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0f1a2e;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #4a5568;
+            border-left: 4px solid #b0c4d9;
+            padding-left: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-top: 1.2rem;
+            border: 1px solid #dce3ec;
+        }
+
+        /* 背景说明卡片 */
+        .card-bg {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.2rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+            border: 1px solid #e6eaf0;
+        }
+
+        .card-bg h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #1f2a41;
+        }
+
+        .card-bg p {
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .card-bg p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            background: #f7f9fc;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        /* 三栏信息卡片（三段自然介绍） */
+        .grid-three {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 700px) {
+            .grid-three {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1.8rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            transition: box-shadow 0.15s;
+        }
+
+        .info-card:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        .info-card h3 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-card ul, .info-card p {
+            font-size: 0.95rem;
+            color: #334155;
+            margin: 0.4rem 0;
+            list-style: none;
+        }
+
+        .info-card li {
+            margin-bottom: 0.4rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .info-card li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+        }
+
+        .dot-list {
+            padding-left: 0;
+        }
+
+        /* 页尾提示区 + FAQ 摘要 */
+        .footer-note {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2rem 2rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+            margin-top: 0.5rem;
+        }
+
+        .footer-note h2 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1f2a41;
+            margin-bottom: 1.2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 500;
+            color: #0f1a2e;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item p {
+            color: #3a4a5e;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .access-line {
+            margin-top: 1.8rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e8ecf2;
+            font-size: 0.95rem;
+            color: #2d3748;
+        }
+
+        .access-line a {
+            color: #1e3a6f;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b9c9dd;
+            transition: border-color 0.15s;
+        }
+
+        .access-line a:hover {
+            border-bottom-color: #1e3a6f;
+        }
+
+        .subtle-ref {
+            margin-top: 1.2rem;
+            color: #6b7a8f;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 1rem 0 1.2rem 0;
+        }
+
+        .inline-link {
+            color: #1e3a6f;
+            text-decoration: none;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .inline-link:hover {
+            border-bottom-color: #1e3a6f;
+        }
+
+        @media (max-width: 500px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero {
+                padding: 2rem 1.2rem;
+            }
+            .card-bg, .footer-note {
+                padding: 1.5rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="hero">
+        <h1>28圈 · 资料索引</h1>
+        <div class="sub">信息归档 · 内容整理 · 结构参考</div>
+        <div class="badge">基于公开信息与站点结构梳理</div>
+    </div>
+
+    <!-- 背景说明 -->
+    <div class="card-bg">
+        <h2>关于这份整理</h2>
+        <p>本页是对 <a href="https://official-28loop.com" class="inline-link">28圈</a> 网站所呈现内容的一种摘要式归档。从信息索引的视角出发，将站点内的模块、分类与常见查询点整合为一份平实的说明页，方便快速了解整体结构。</p>
+        <p>整理范围包括主要功能分区、内容组织逻辑及常规条目分布。所有描述均基于对公开页面的观察与归纳，不包含任何未公开或非公开信息。</p>
+    </div>
+
+    <!-- 三段自然介绍（卡片区） -->
+    <div class="grid-three">
+        <div class="info-card">
+            <h3>内容架构</h3>
+            <ul class="dot-list">
+                <li>分类目录：按主题与类型分别归档</li>
+                <li>条目卡片：标题、摘要与元信息组合</li>
+                <li>筛选与排序：支持时间、热度与分类过滤</li>
+                <li>内链结构：相关条目互相引用，形成网状索引</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>信息类型</h3>
+            <ul class="dot-list">
+                <li>专题文章：长篇整理与综合解读</li>
+                <li>快讯与短记：即时性内容更新</li>
+                <li>资料汇编：静态页与参考清单</li>
+                <li>用户贡献：注释、补充与讨论区摘要</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h3>使用场景</h3>
+            <ul class="dot-list">
+                <li>调研参考：集中查阅某一主题下的相关条目</li>
+                <li>资料对比：通过分类和标签进行横向比对</li>
+                <li>回溯查询：按发布时间或修订记录追踪变化</li>
+                <li>日常浏览：按分类顺序或推荐列表阅读</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 页尾提示 + FAQ 摘要 -->
+    <div class="footer-note">
+        <h2>常见索引问题</h2>
+
+        <div class="faq-item">
+            <strong>Q: 资料是基于什么版本整理的？</strong>
+            <p>基于截至整理日期的公开页面结构与内容分类。站点若有调整，索引描述可能略有滞后。</p>
+        </div>
+
+        <div class="faq-item">
+            <strong>Q: 是否包含所有深层页面？</strong>
+            <p>主要覆盖一级分类与代表性二级条目，未逐页遍历全部子页面。深层细节建议直接在站内检索。</p>
+        </div>
+
+        <div class="faq-item">
+            <strong>Q: 这份索引会更新吗？</strong>
+            <p>本页为静态归档，不设自动同步。建议以 <a href="https://official-28loop.com" class="inline-link">28圈</a> 站内信息为准。</p>
+        </div>
+
+        <hr>
+
+        <div class="access-line">
+            <span>如需查阅完整内容与最新条目，可前往 </span>
+            <a href="https://official-28loop.com">28圈</a>
+            <span> 进行浏览。</span>
+        </div>
+
+        <div class="subtle-ref">整理编号 · f4760a47b54f6ef6</div>
+    </div>
+
+</div>
+</body>
+</html>
